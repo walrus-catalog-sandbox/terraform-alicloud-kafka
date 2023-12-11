@@ -80,16 +80,16 @@ variable "seeding" {
 
   Examples:
   ```
-  seeding:
-      topics: list(string), optional
-      partitions: number, optional
+  seeding: 
+    - topic: string, optional
+      partition: number, optional
       remark: string, optional
   ```
   EOF
-  type = object({
-    topics     = optional(list(string))
+  type = list(object({
+    topic      = optional(string)
     partitions = optional(number, 1)
     remark     = optional(string, "Created by Walrus catalog, and provisioned by Terraform.")
-  })
+  }))
   default = null
 }

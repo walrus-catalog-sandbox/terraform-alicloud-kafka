@@ -93,10 +93,10 @@ resource "alicloud_alikafka_consumer_group" "default" {
 }
 
 resource "alicloud_alikafka_topic" "dynamic" {
-  count = var.seeding.topics == null ? 0 : length(var.seeding.topics)
+  count = var.seeding == null ? 0 : length(var.seeding)
 
   instance_id   = alicloud_alikafka_instance.default.id
-  topic         = var.seeding.topics[count.index]
-  partition_num = var.seeding.partitions
-  remark        = var.seeding.remark
+  topic         = var.seeding[count.index].topic
+  partition_num = var.seeding[count.index].partitions
+  remark        = var.seeding[count.index].remark
 }

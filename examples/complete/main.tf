@@ -68,9 +68,18 @@ module "this" {
 
   storage = local.storage
 
-  seeding = {
-    topics = ["topic1", "topic2"]
-  }
+  seeding = [
+    {
+      topic      = "example1",
+      partitions = 1,
+      remark     = "example 1"
+    },
+    {
+      topic      = "example2",
+      partitions = 2,
+      remark     = "example 2"
+    }
+  ]
 }
 
 output "context" {
