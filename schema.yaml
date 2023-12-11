@@ -57,11 +57,15 @@ components:
               nullable: true
               title: Kms Key Id
               type: string
+              description: |
+                Specify the KMS key ID which to encrypt the Kafka data. If not specified, the Kafka data will not be encrypted.
               x-walrus-ui:
                 order: 2
             vpc_id:
               title: Vpc Id
               type: string
+              description: |
+                Specify the ID of the VPC where the Kafka service applies.
               x-walrus-ui:
                 order: 1
           x-walrus-ui:
@@ -87,6 +91,11 @@ components:
               nullable: true
               title: Class
               type: number
+              description: |
+                Specify the disk type of the instance. 0: efficient cloud disk , 1: SSD.
+              enum:
+              - 0
+              - 1
               x-walrus-ui:
                 order: 1
             size:
@@ -94,12 +103,14 @@ components:
               nullable: true
               title: Size
               type: number
+              description: |
+                Specify the size of the disk in megabyte.
               x-walrus-ui:
                 order: 2
           x-walrus-ui:
             colSpan: 12
             group: Basic
-            order: 4
+            order: 3
         seeding:
           title: Seeding
           type: object
@@ -120,6 +131,8 @@ components:
               nullable: true
               title: Partitions
               type: number
+              description: |
+                Specify the number of partitions for the topic.
               x-walrus-ui:
                 order: 2
             remark:
@@ -127,6 +140,8 @@ components:
               nullable: true
               title: Remark
               type: string
+              description: |
+                Specify the remark for the topic.
               x-walrus-ui:
                 order: 3
             topics:
@@ -135,14 +150,15 @@ components:
               nullable: true
               title: Topics
               type: array
+              description: |
+                Specify the topics to be created when provisioning.
               x-walrus-ui:
                 colSpan: 12
                 order: 1
           x-walrus-ui:
             colSpan: 12
             group: Basic
-            order: 5
-        null: null
+            order: 4
       x-walrus-ui:
         groupOrder:
         - Basic
