@@ -1,10 +1,12 @@
 openapi: 3.0.3
 info:
-  title: OpenAPI schema for template walrus-template-template
+  title: OpenAPI schema for template terraform-alicloud-kafka
 components:
   schemas:
     variables:
       type: object
+      required:
+      - infrastructure
       properties:
         context:
           title: Context
@@ -26,6 +28,7 @@ components:
                 id: string
             ```
           default: {}
+          nullable: true
           additionalProperties:
             type: object
             x-walrus-ui:
@@ -35,6 +38,111 @@ components:
             group: Basic
             hidden: true
             order: 1
+        infrastructure:
+          title: Infrastructure
+          type: object
+          description: |
+            Specify the infrastructure information for deploying.
+
+            Examples:
+            ```
+            infrastructure:
+              vpc_id: string                  # the ID of the VPC where the Kafka service applies
+              kms_key_id: string,optional     # the ID of the KMS key which to encrypt the Kafka data
+            ```
+          required:
+          - vpc_id
+          properties:
+            kms_key_id:
+              nullable: true
+              title: Kms Key Id
+              type: string
+              x-walrus-ui:
+                order: 2
+            vpc_id:
+              title: Vpc Id
+              type: string
+              x-walrus-ui:
+                order: 1
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 2
+        storage:
+          title: Storage
+          type: object
+          description: |
+            Specify the disk type of the instance. 0: efficient cloud disk , 1: SSD.
+
+            Examples:
+            ```
+            storage:
+              class: number, optional        # https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/alikafka_instance#disk_type
+              size: number, optional         # in megabyte
+            ```
+          nullable: true
+          properties:
+            class:
+              default: 0
+              nullable: true
+              title: Class
+              type: number
+              x-walrus-ui:
+                order: 1
+            size:
+              default: 500
+              nullable: true
+              title: Size
+              type: number
+              x-walrus-ui:
+                order: 2
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 4
+        seeding:
+          title: Seeding
+          type: object
+          description: |
+            Specify the configuration to kafka provisioning.
+
+            Examples:
+            ```
+            seeding:
+                topics: list(string), optional
+                partitions: number, optional
+                remark: string, optional
+            ```
+          nullable: true
+          properties:
+            partitions:
+              default: 1
+              nullable: true
+              title: Partitions
+              type: number
+              x-walrus-ui:
+                order: 2
+            remark:
+              default: Created by Walrus catalog, and provisioned by Terraform.
+              nullable: true
+              title: Remark
+              type: string
+              x-walrus-ui:
+                order: 3
+            topics:
+              items:
+                type: string
+              nullable: true
+              title: Topics
+              type: array
+              x-walrus-ui:
+                colSpan: 12
+                order: 1
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 5
+        null: null
       x-walrus-ui:
         groupOrder:
         - Basic
