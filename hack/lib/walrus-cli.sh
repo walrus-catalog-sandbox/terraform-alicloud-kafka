@@ -22,14 +22,30 @@ function seal::walrus_cli::install() {
 }
 
 function seal::walrus_cli::validate() {
+  local os
+  os=$(seal::util::get_os)
+  local arch
+  arch=$(seal::util::get_arch)
+  
   # shellcheck disable=SC2046
   if [[ -n "$(command -v $(seal::walrus_cli::bin))" ]]; then
-    return 0
+    if [[ "${walrus_cli_version}" == "latest" ]]; then
+      local expected_md5sum
+      expected_md5sum=$(curl --retry 3 --retry-all-errors --retry-delay 3 -IsSfL "https://walrus-cli-1303613262.cos.ap-guangzhou.myqcloud.com/releases/latest/walrus-cli-${os}-${arch}" | grep ETag | cut -d " " -f 2 | sed -e 's/"//g')
+      local actual_md5sum
+      actual_md5sum=$(md5sum "$(seal::walrus_cli::bin)" | cut -d " " -f 1)
+      if [[ "${expected_md5sum}" == "${actual_md5sum}" ]]; then
+        return 0
+      fi
+      return 0
+    elif [[ $($(seal::walrus_cli::bin) --version 2>/dev/null | head -n 1 | cut -d " " -f 3 2>&1) == "${walrus_cli_version}" ]]; then
+      return 0
+    fi
   fi
 
   seal::log::info "installing walrus-cli ${walrus_cli_version}"
   if seal::walrus_cli::install; then
-    seal::log::info "walrus-cli $($(seal::walrus_cli::bin) version 2>/dev/null | head -n 1)"
+    seal::log::info "walrus-cli $($(seal::walrus_cli::bin) --version 2>/dev/null | head -n 1)"
     return 0
   fi
   seal::log::error "no walrus-cli"
