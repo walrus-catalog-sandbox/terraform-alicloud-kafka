@@ -13,20 +13,6 @@ components:
           type: object
           description: |
             Receive contextual information. When Walrus deploys, Walrus will inject specific contextual information into this field.
-
-            Examples:
-            ```
-            context:
-              project:
-                name: string
-                id: string
-              environment:
-                name: string
-                id: string
-              resource:
-                name: string
-                id: string
-            ```
           default: {}
           nullable: true
           additionalProperties:
@@ -43,13 +29,6 @@ components:
           type: object
           description: |
             Specify the infrastructure information for deploying.
-
-            Examples:
-            ```
-            infrastructure:
-              vpc_id: string                  # the ID of the VPC where the Kafka service applies
-              kms_key_id: string,optional     # the ID of the KMS key which to encrypt the Kafka data
-            ```
           required:
           - vpc_id
           properties:
@@ -77,13 +56,6 @@ components:
           type: object
           description: |
             Specify the disk type of the instance. 0: efficient cloud disk , 1: SSD.
-
-            Examples:
-            ```
-            storage:
-              class: number, optional        # https://registry.terraform.io/providers/aliyun/alicloud/latest/docs/resources/alikafka_instance#disk_type
-              size: number, optional         # in megabyte
-            ```
           nullable: true
           properties:
             class:
@@ -116,14 +88,6 @@ components:
           type: array
           description: |
             Specify the configuration to kafka provisioning.
-
-            Examples:
-            ```
-            seeding:
-                topics: list(string), optional
-                partitions: number, optional
-                remark: string, optional
-            ```
           items:
             properties:
               partitions:

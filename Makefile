@@ -19,8 +19,8 @@ help:
 	#
 	#   * [dev] `make generate`, generate README file.
 	#           - `make generate examples/hello-world` only generate docs and schema under examples/hello-world directory.
-        #           - `make generate docs examples/hello-world` only generate README file under examples/hello-world directory.
-        #           - `make generate schema examples/hello-world` only generate schema.yaml under examples/hello-world directory.
+	#           - `make generate docs examples/hello-world` only generate README file under examples/hello-world directory.
+	#           - `make generate schema examples/hello-world` only generate schema.yaml under examples/hello-world directory.
 	#
 	#   * [dev] `make lint`, check style and security.
 	#           - `LINT_DIRTY=true make lint` verify whether the code tree is dirty.

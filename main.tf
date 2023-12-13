@@ -68,7 +68,12 @@ resource "random_string" "name_suffix" {
 locals {
   name     = join("-", [local.resource_name, random_string.name_suffix.result])
   fullname = join("-", [local.namespace, local.name])
+  description = "Created by Walrus catalog, and provisioned by Terraform."
 }
+
+#
+# Deployment
+#
 
 resource "alicloud_security_group" "default" {
   vpc_id = data.alicloud_vpcs.selected.ids[0]
@@ -76,6 +81,8 @@ resource "alicloud_security_group" "default" {
 
 resource "alicloud_alikafka_instance" "default" {
   name           = local.fullname
+  tags           = local.tags
+
   partition_num  = 0
   disk_type      = try(var.storage.class, 0)
   disk_size      = try(var.storage.size, 500)
@@ -84,10 +91,11 @@ resource "alicloud_alikafka_instance" "default" {
   vswitch_id     = data.alicloud_vswitches.selected.vswitches[0].id
   security_group = alicloud_security_group.default.id
   kms_key_id     = try(data.alicloud_kms_keys.selected[0].ids[0], null)
-  tags           = local.tags
 }
 
 resource "alicloud_alikafka_consumer_group" "default" {
+  description = local.description
+
   instance_id = alicloud_alikafka_instance.default.id
   consumer_id = local.fullname
 }
@@ -95,8 +103,9 @@ resource "alicloud_alikafka_consumer_group" "default" {
 resource "alicloud_alikafka_topic" "dynamic" {
   count = var.seeding == null ? 0 : length(var.seeding)
 
+  remark        = local.description
+
   instance_id   = alicloud_alikafka_instance.default.id
   topic         = var.seeding[count.index].topic
   partition_num = var.seeding[count.index].partitions
-  remark        = var.seeding[count.index].remark
 }

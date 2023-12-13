@@ -83,13 +83,11 @@ variable "seeding" {
   seeding: 
     - topic: string, optional
       partition: number, optional
-      remark: string, optional
   ```
   EOF
   type = list(object({
     topic      = optional(string)
     partitions = optional(number, 1)
-    remark     = optional(string, "Created by Walrus catalog, and provisioned by Terraform.")
   }))
   default = null
 }
