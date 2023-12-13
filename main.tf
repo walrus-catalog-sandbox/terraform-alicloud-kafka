@@ -66,8 +66,8 @@ resource "random_string" "name_suffix" {
 }
 
 locals {
-  name     = join("-", [local.resource_name, random_string.name_suffix.result])
-  fullname = join("-", [local.namespace, local.name])
+  name        = join("-", [local.resource_name, random_string.name_suffix.result])
+  fullname    = join("-", [local.namespace, local.name])
   description = "Created by Walrus catalog, and provisioned by Terraform."
 }
 
@@ -80,8 +80,8 @@ resource "alicloud_security_group" "default" {
 }
 
 resource "alicloud_alikafka_instance" "default" {
-  name           = local.fullname
-  tags           = local.tags
+  name = local.fullname
+  tags = local.tags
 
   partition_num  = 0
   disk_type      = try(var.storage.class, 0)
@@ -103,7 +103,7 @@ resource "alicloud_alikafka_consumer_group" "default" {
 resource "alicloud_alikafka_topic" "dynamic" {
   count = var.seeding == null ? 0 : length(var.seeding)
 
-  remark        = local.description
+  remark = local.description
 
   instance_id   = alicloud_alikafka_instance.default.id
   topic         = var.seeding[count.index].topic
