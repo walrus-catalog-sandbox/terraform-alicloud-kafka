@@ -56,7 +56,6 @@ No inputs.
 | <a name="output_connection"></a> [connection](#output\_connection) | n/a |
 | <a name="output_consumer_group_id"></a> [consumer\_group\_id](#output\_consumer\_group\_id) | n/a |
 | <a name="output_context"></a> [context](#output\_context) | n/a |
-| <a name="output_endpoints"></a> [endpoints](#output\_endpoints) | n/a |
 | <a name="output_port"></a> [port](#output\_port) | n/a |
 | <a name="output_refer"></a> [refer](#output\_refer) | n/a |
 <!-- END_TF_DOCS -->

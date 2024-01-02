@@ -48,13 +48,6 @@ output "port" {
   value       = local.port
 }
 
-## UI display
-
-output "endpoints" {
-  description = "The endpoints, a list of string combined host and port."
-  value       = local.endpoints
-}
-
 output "consumer_group_id" {
   description = "The consumer group id."
   value       = alicloud_alikafka_consumer_group.default.consumer_id

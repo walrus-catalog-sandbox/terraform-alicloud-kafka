@@ -102,10 +102,6 @@ output "port" {
   value = module.this.port
 }
 
-output "endpoints" {
-  value = module.this.endpoints
-}
-
 output "consumer_group_id" {
   value = module.this.consumer_group_id
 }
