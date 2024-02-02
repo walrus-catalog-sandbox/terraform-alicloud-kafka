@@ -19,7 +19,6 @@ components:
             kms_key_id:
               description: |
                 Specify the KMS key ID which to encrypt the Kafka data. If not specified, the Kafka data will not be encrypted.
-              nullable: true
               title: Kms Key Id
               type: string
               x-walrus-ui:
@@ -40,7 +39,9 @@ components:
           type: object
           description: |
             Specify the disk type of the instance. 0: efficient cloud disk , 1: SSD.
-          nullable: true
+          default:
+            class: 0
+            size: 500
           properties:
             class:
               default: 0
@@ -49,7 +50,6 @@ components:
               enum:
               - 0
               - 1
-              nullable: true
               title: Class
               type: number
               x-walrus-ui:
@@ -58,7 +58,6 @@ components:
               default: 500
               description: |
                 Specify the size of the disk in megabyte.
-              nullable: true
               title: Size
               type: number
               x-walrus-ui:
@@ -78,7 +77,6 @@ components:
                 default: 1
                 description: |
                   Specify the number of partitions for the topic.
-                nullable: true
                 title: Partitions
                 type: number
                 x-walrus-ui:
@@ -87,7 +85,6 @@ components:
                 default: Created by Walrus catalog, and provisioned by Terraform.
                 description: |
                   Specify the remark for the topic.
-                nullable: true
                 title: Remark
                 type: string
                 x-walrus-ui:
@@ -95,7 +92,6 @@ components:
               topic:
                 description: |
                   Specify the topic to be created when provisioning.
-                nullable: true
                 title: Topic
                 type: string
                 x-walrus-ui:
@@ -103,7 +99,6 @@ components:
             type: object
             x-walrus-ui:
               colSpan: 12
-          nullable: true
           x-walrus-ui:
             colSpan: 12
             group: Basic
